@@ -17,11 +17,11 @@ jobs:
       matrix:
         value: ${{ fromJson(needs.get-matrix.outputs.values) }}
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}-run-matrix-${{ matrix.value }}
+      group: ${{ github.ref }} ${{ github.workflow }}/run-matrix ${{ matrix.value }}
       cancel-in-progress: true
     steps:
       - name: Show concurrency group
-        run: echo ${{ github.workflow }}-${{ github.ref }}-run-matrix-${{ matrix.value }}
+        run: echo ${{ github.ref }} ${{ github.workflow }}/run-matrix ${{ matrix.value }}
       - name: Show matrix value
         run: echo ${{ matrix.value }}
       - name: Sleep
