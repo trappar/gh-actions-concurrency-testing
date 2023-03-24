@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       values: ${{ steps.run.outputs.values }}
+    concurrency: ${{ github.ref }} ${{ github.workflow }} get-matrix
     steps:
       - name: Get matrix
         id: run
@@ -17,11 +18,9 @@ jobs:
       matrix:
         value: ${{ fromJson(needs.get-matrix.outputs.values) }}
     concurrency:
-      group: ${{ github.ref }} ${{ github.workflow }}/run-matrix ${{ matrix.value }}
+      group: ${{ github.ref }} ${{ github.workflow }} run-matrix ${{ matrix.value }}
       cancel-in-progress: true
     steps:
-      - name: Show concurrency group
-        run: echo ${{ github.ref }} ${{ github.workflow }}/run-matrix ${{ matrix.value }}
       - name: Show matrix value
         run: echo ${{ matrix.value }}
       - name: Sleep
