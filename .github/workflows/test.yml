@@ -22,3 +22,5 @@ jobs:
         run: echo ${{ github.workflow }}-${{ github.ref }}-run-matrix-${{ matrix.value }}
       - name: Show matrix value
         run: echo ${{ matrix.value }}
+      - name: Sleep
+        run: sleep 15
