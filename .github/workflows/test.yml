@@ -5,7 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       values: ${{ steps.run.outputs.values }}
-    concurrency: ${{ github.ref }} ${{ github.workflow }} get-matrix
     steps:
       - name: Get matrix
         id: run
