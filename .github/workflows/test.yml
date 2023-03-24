@@ -16,6 +16,9 @@ jobs:
     strategy:
       matrix:
         value: ${{ fromJson(needs.get-matrix.outputs.values) }}
+    concurrency: ${{ github.workflow }}-${{ github.ref }}-run-matrix-${{ matrix.value }}
     steps:
+      - name: Show concurrency group
+        run: echo ${{ github.workflow }}-${{ github.ref }}-run-matrix-${{ matrix.value }}
       - name: Show matrix value
         run: echo ${{ matrix.value }}
