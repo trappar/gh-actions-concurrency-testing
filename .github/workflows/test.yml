@@ -1,0 +1,21 @@
+name: Test
+on: workflow_dispatch
+jobs:
+  get-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      values: ${{ steps.run.outputs.values }}
+    steps:
+      - name: Get matrix
+        id: run
+        run: echo "values=[1,2,3]" >> $GITHUB_OUTPUT
+
+  run-matrix:
+    needs: get-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        value: ${{ fromJson(needs.get-matrix.outputs.values) }}
+    steps:
+      - name: Show matrix value
+        run: echo ${{ matrix.value }}
